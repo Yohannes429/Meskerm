@@ -147,7 +147,7 @@ const StudentDashboard = () => {
       
       <main className="container mx-auto px-4 py-8">
         {/* Header */}
-        <div className="mb-8 flex items-center justify-between">
+        <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h1 className="text-3xl font-bold text-foreground">
               Welcome back, {profile?.full_name}!
@@ -156,7 +156,7 @@ const StudentDashboard = () => {
               {profile?.grade_level && `Grade ${profile.grade_level}`} Student Dashboard
             </p>
           </div>
-          <Button variant="outline" onClick={handleSignOut}>
+          <Button variant="outline" onClick={handleSignOut} className="w-full sm:w-auto">
             <LogOut className="mr-2 h-4 w-4" />
             Sign Out
           </Button>

@@ -11,6 +11,8 @@ import Contact from "./pages/Contact";
 import Auth from "./pages/Auth";
 import StudentDashboard from "./pages/StudentDashboard";
 import TeacherDashboard from "./pages/TeacherDashboard";
+import CreateExam from "./pages/CreateExam";
+import TakeExam from "./pages/TakeExam";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +32,9 @@ const App = () => (
           <Route path="/auth" element={<Auth />} />
           <Route path="/student-dashboard" element={<StudentDashboard />} />
           <Route path="/teacher-dashboard" element={<TeacherDashboard />} />
+          <Route path="/create-exam" element={<CreateExam />} />
+          <Route path="/exam/:examId/edit" element={<CreateExam />} />
+          <Route path="/exam/:examId/:studentExamId" element={<TakeExam />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
