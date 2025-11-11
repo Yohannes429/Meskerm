@@ -53,9 +53,9 @@ const Navbar = () => {
             <Link to="/auth">
               <Button variant="ghost">Sign In</Button>
             </Link>
-            <Link to="/auth">
+            <Link to="/register">
               <Button className="bg-gradient-to-r from-primary to-secondary text-white hover:opacity-90">
-                Get Started
+                Apply Now
               </Button>
             </Link>
           </div>
@@ -98,9 +98,9 @@ const Navbar = () => {
                     Sign In
                   </Button>
                 </Link>
-                <Link to="/auth" onClick={() => setIsOpen(false)}>
+                <Link to="/register" onClick={() => setIsOpen(false)}>
                   <Button className="w-full bg-gradient-to-r from-primary to-secondary text-white">
-                    Get Started
+                    Apply Now
                   </Button>
                 </Link>
               </div>

@@ -9,6 +9,7 @@ import Academics from "./pages/Academics";
 import News from "./pages/News";
 import Contact from "./pages/Contact";
 import Auth from "./pages/Auth";
+import Register from "./pages/Register";
 import StudentDashboard from "./pages/StudentDashboard";
 import TeacherDashboard from "./pages/TeacherDashboard";
 import CreateExam from "./pages/CreateExam";
@@ -30,6 +31,7 @@ const App = () => (
           <Route path="/news" element={<News />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/auth" element={<Auth />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/student-dashboard" element={<StudentDashboard />} />
           <Route path="/teacher-dashboard" element={<TeacherDashboard />} />
           <Route path="/create-exam" element={<CreateExam />} />
