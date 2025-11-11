@@ -120,60 +120,58 @@ const Register = () => {
                   </div>
 
                   {(gradeLevel === "11" || gradeLevel === "12") && (
-                    <>
-                      <div className="space-y-2">
-                        <Label htmlFor="field">Field/Stream *</Label>
-                        <Select name="field" required>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select your field" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="natural_science">Natural Science</SelectItem>
-                            <SelectItem value="social_science">Social Science</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      <div className="space-y-2">
-                        <Label htmlFor="lastYearGrade">Last Year Grade/Average *</Label>
-                        <Input
-                          id="lastYearGrade"
-                          name="lastYearGrade"
-                          type="text"
-                          placeholder="e.g., 85% or 3.5 GPA"
-                          required
-                        />
-                      </div>
-
-                      <div className="space-y-2">
-                        <Label htmlFor="certificate">Grade Certificate *</Label>
-                        <Input
-                          id="certificate"
-                          name="certificate"
-                          type="file"
-                          accept=".pdf,.jpg,.jpeg,.png"
-                          required
-                        />
-                        <p className="text-xs text-muted-foreground">
-                          Upload your previous grade certificate (PDF or image)
-                        </p>
-                      </div>
-
-                      <div className="space-y-2">
-                        <Label htmlFor="releaseSheet">Release Sheet from Previous School *</Label>
-                        <Input
-                          id="releaseSheet"
-                          name="releaseSheet"
-                          type="file"
-                          accept=".pdf,.jpg,.jpeg,.png"
-                          required
-                        />
-                        <p className="text-xs text-muted-foreground">
-                          Upload your release sheet from previous school (PDF or image)
-                        </p>
-                      </div>
-                    </>
+                    <div className="space-y-2">
+                      <Label htmlFor="field">Field/Stream *</Label>
+                      <Select name="field" required>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select your field" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="natural_science">Natural Science</SelectItem>
+                          <SelectItem value="social_science">Social Science</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
                   )}
+
+                  <div className="space-y-2">
+                    <Label htmlFor="lastYearGrade">Last Year Grade/Average *</Label>
+                    <Input
+                      id="lastYearGrade"
+                      name="lastYearGrade"
+                      type="text"
+                      placeholder="e.g., 85% or 3.5 GPA"
+                      required
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="certificate">Grade Certificate *</Label>
+                    <Input
+                      id="certificate"
+                      name="certificate"
+                      type="file"
+                      accept=".pdf,.jpg,.jpeg,.png"
+                      required
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      Upload your previous grade certificate (PDF or image)
+                    </p>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="releaseSheet">Release Sheet from Previous School *</Label>
+                    <Input
+                      id="releaseSheet"
+                      name="releaseSheet"
+                      type="file"
+                      accept=".pdf,.jpg,.jpeg,.png"
+                      required
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      Upload your release sheet from previous school (PDF or image)
+                    </p>
+                  </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="previousSchool">Previous School</Label>
