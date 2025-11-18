@@ -10,8 +10,6 @@ import News from "./pages/News";
 import Contact from "./pages/Contact";
 import Auth from "./pages/Auth";
 import Register from "./pages/Register";
-import StudentDashboard from "./pages/StudentDashboard";
-import TeacherDashboard from "./pages/TeacherDashboard";
 import CreateExam from "./pages/CreateExam";
 import TakeExam from "./pages/TakeExam";
 import NotFound from "./pages/NotFound";
@@ -32,8 +30,6 @@ const App = () => (
           <Route path="/contact" element={<Contact />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/student-dashboard" element={<StudentDashboard />} />
-          <Route path="/teacher-dashboard" element={<TeacherDashboard />} />
           <Route path="/create-exam" element={<CreateExam />} />
           <Route path="/exam/:examId/edit" element={<CreateExam />} />
           <Route path="/exam/:examId/:studentExamId" element={<TakeExam />} />
