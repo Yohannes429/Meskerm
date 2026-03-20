@@ -54,7 +54,7 @@ const TakeExam = () => {
   const loadExamData = async () => {
     try {
       const { data: examData } = await supabase
-        .from("exams")
+        .from("exams" as any)
         .select("*")
         .eq("id", examId)
         .single();
