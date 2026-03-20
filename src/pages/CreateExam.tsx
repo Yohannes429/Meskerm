@@ -167,7 +167,7 @@ const CreateExam = () => {
       // Delete existing questions if editing
       if (examId) {
         await supabase
-          .from("questions")
+          .from("questions" as any)
           .delete()
           .eq("exam_id", examId);
       }
