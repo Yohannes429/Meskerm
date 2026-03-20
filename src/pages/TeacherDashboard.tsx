@@ -71,17 +71,19 @@ const TeacherDashboard = () => {
     }
 
     const { data: profileData } = await supabase
-      .from("profiles")
+      .from("profiles" as any)
       .select("*")
       .eq("id", user.id)
       .single();
 
-    if (!profileData || (profileData.role !== "teacher" && profileData.role !== "admin")) {
+    const role = (profileData as any)?.role || user.user_metadata?.role || "student";
+
+    if (role !== "teacher" && role !== "admin") {
       navigate("/student-dashboard");
       return;
     }
 
-    setProfile(profileData);
+    setProfile(profileData || { full_name: user.user_metadata?.full_name, role });
     await fetchData(user.id);
     setLoading(false);
   };
@@ -89,29 +91,28 @@ const TeacherDashboard = () => {
   const fetchData = async (userId: string) => {
     // Fetch teacher's exams
     const { data: examsData } = await supabase
-      .from("exams")
+      .from("exams" as any)
       .select("*")
       .eq("teacher_id", userId)
       .order("created_at", { ascending: false });
 
-    setExams(examsData || []);
+    setExams((examsData as any) || []);
 
     // Fetch recent student results
     const { data: resultsData } = await supabase
-      .from("student_exams")
+      .from("student_exams" as any)
       .select(`
         id,
         student_id,
         score,
         percentage,
-        status,
-        profiles:student_id(full_name)
+        status
       `)
       .eq("status", "completed")
       .order("submitted_at", { ascending: false })
       .limit(10);
 
-    setStudentResults(resultsData || []);
+    setStudentResults((resultsData as any) || []);
   };
 
   const handleSignOut = async () => {
@@ -122,7 +123,7 @@ const TeacherDashboard = () => {
 
   const publishExam = async (examId: string) => {
     const { error } = await supabase
-      .from("exams")
+      .from("exams" as any)
       .update({ status: "published" })
       .eq("id", examId);
 
@@ -138,7 +139,7 @@ const TeacherDashboard = () => {
 
   const deleteExam = async (examId: string) => {
     const { error } = await supabase
-      .from("exams")
+      .from("exams" as any)
       .delete()
       .eq("id", examId);
 

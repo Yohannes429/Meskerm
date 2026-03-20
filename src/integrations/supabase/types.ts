@@ -10,7 +10,7 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "13.0.5"
+    PostgrestVersion: "14.4"
   }
   public: {
     Tables: {
@@ -19,13 +19,11 @@ export type Database = {
           created_at: string
           description: string | null
           duration_minutes: number
-          end_time: string | null
           grade_level: number
           id: string
           instructions: string | null
           passing_marks: number
-          start_time: string | null
-          status: Database["public"]["Enums"]["exam_status"]
+          status: string
           subject: string
           teacher_id: string
           title: string
@@ -35,136 +33,65 @@ export type Database = {
         Insert: {
           created_at?: string
           description?: string | null
-          duration_minutes: number
-          end_time?: string | null
-          grade_level: number
+          duration_minutes?: number
+          grade_level?: number
           id?: string
           instructions?: string | null
-          passing_marks: number
-          start_time?: string | null
-          status?: Database["public"]["Enums"]["exam_status"]
+          passing_marks?: number
+          status?: string
           subject: string
           teacher_id: string
           title: string
-          total_marks: number
+          total_marks?: number
           updated_at?: string
         }
         Update: {
           created_at?: string
           description?: string | null
           duration_minutes?: number
-          end_time?: string | null
           grade_level?: number
           id?: string
           instructions?: string | null
           passing_marks?: number
-          start_time?: string | null
-          status?: Database["public"]["Enums"]["exam_status"]
+          status?: string
           subject?: string
           teacher_id?: string
           title?: string
           total_marks?: number
           updated_at?: string
         }
-        Relationships: [
-          {
-            foreignKeyName: "exams_teacher_id_fkey"
-            columns: ["teacher_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      news_posts: {
-        Row: {
-          author_id: string
-          category: string | null
-          content: string
-          created_at: string
-          excerpt: string | null
-          featured_image: string | null
-          id: string
-          published: boolean
-          published_at: string | null
-          title: string
-          updated_at: string
-        }
-        Insert: {
-          author_id: string
-          category?: string | null
-          content: string
-          created_at?: string
-          excerpt?: string | null
-          featured_image?: string | null
-          id?: string
-          published?: boolean
-          published_at?: string | null
-          title: string
-          updated_at?: string
-        }
-        Update: {
-          author_id?: string
-          category?: string | null
-          content?: string
-          created_at?: string
-          excerpt?: string | null
-          featured_image?: string | null
-          id?: string
-          published?: boolean
-          published_at?: string | null
-          title?: string
-          updated_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "news_posts_author_id_fkey"
-            columns: ["author_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       profiles: {
         Row: {
-          avatar_url: string | null
           created_at: string
-          full_name: string
-          grade_level: number | null
+          email: string | null
+          full_name: string | null
           id: string
-          phone: string | null
-          role: Database["public"]["Enums"]["user_role"]
-          section: string | null
+          role: string
           updated_at: string
         }
         Insert: {
-          avatar_url?: string | null
           created_at?: string
-          full_name: string
-          grade_level?: number | null
+          email?: string | null
+          full_name?: string | null
           id: string
-          phone?: string | null
-          role?: Database["public"]["Enums"]["user_role"]
-          section?: string | null
+          role?: string
           updated_at?: string
         }
         Update: {
-          avatar_url?: string | null
           created_at?: string
-          full_name?: string
-          grade_level?: number | null
+          email?: string | null
+          full_name?: string | null
           id?: string
-          phone?: string | null
-          role?: Database["public"]["Enums"]["user_role"]
-          section?: string | null
+          role?: string
           updated_at?: string
         }
         Relationships: []
       }
       questions: {
         Row: {
-          correct_answer: string
+          correct_answer: string | null
           created_at: string
           exam_id: string
           explanation: string | null
@@ -173,22 +100,22 @@ export type Database = {
           options: Json | null
           order_number: number
           question_text: string
-          question_type: Database["public"]["Enums"]["question_type"]
+          question_type: string
         }
         Insert: {
-          correct_answer: string
+          correct_answer?: string | null
           created_at?: string
           exam_id: string
           explanation?: string | null
           id?: string
-          marks: number
+          marks?: number
           options?: Json | null
-          order_number: number
+          order_number?: number
           question_text: string
-          question_type: Database["public"]["Enums"]["question_type"]
+          question_type?: string
         }
         Update: {
-          correct_answer?: string
+          correct_answer?: string | null
           created_at?: string
           exam_id?: string
           explanation?: string | null
@@ -197,7 +124,7 @@ export type Database = {
           options?: Json | null
           order_number?: number
           question_text?: string
-          question_type?: Database["public"]["Enums"]["question_type"]
+          question_type?: string
         }
         Relationships: [
           {
@@ -211,7 +138,7 @@ export type Database = {
       }
       student_answers: {
         Row: {
-          answer_text: string
+          answer_text: string | null
           created_at: string
           id: string
           is_correct: boolean | null
@@ -220,7 +147,7 @@ export type Database = {
           student_exam_id: string
         }
         Insert: {
-          answer_text: string
+          answer_text?: string | null
           created_at?: string
           id?: string
           is_correct?: boolean | null
@@ -229,7 +156,7 @@ export type Database = {
           student_exam_id: string
         }
         Update: {
-          answer_text?: string
+          answer_text?: string | null
           created_at?: string
           id?: string
           is_correct?: boolean | null
@@ -261,11 +188,10 @@ export type Database = {
           id: string
           percentage: number | null
           score: number | null
-          started_at: string
           status: string
           student_id: string
           submitted_at: string | null
-          total_marks: number
+          total_marks: number | null
         }
         Insert: {
           created_at?: string
@@ -273,11 +199,10 @@ export type Database = {
           id?: string
           percentage?: number | null
           score?: number | null
-          started_at?: string
           status?: string
           student_id: string
           submitted_at?: string | null
-          total_marks: number
+          total_marks?: number | null
         }
         Update: {
           created_at?: string
@@ -285,11 +210,10 @@ export type Database = {
           id?: string
           percentage?: number | null
           score?: number | null
-          started_at?: string
           status?: string
           student_id?: string
           submitted_at?: string | null
-          total_marks?: number
+          total_marks?: number | null
         }
         Relationships: [
           {
@@ -297,13 +221,6 @@ export type Database = {
             columns: ["exam_id"]
             isOneToOne: false
             referencedRelation: "exams"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "student_exams_student_id_fkey"
-            columns: ["student_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -316,9 +233,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      exam_status: "draft" | "published" | "archived"
-      question_type: "multiple_choice" | "true_false" | "short_answer" | "essay"
-      user_role: "student" | "teacher" | "admin"
+      [_ in never]: never
     }
     CompositeTypes: {
       [_ in never]: never
@@ -445,10 +360,6 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {
-      exam_status: ["draft", "published", "archived"],
-      question_type: ["multiple_choice", "true_false", "short_answer", "essay"],
-      user_role: ["student", "teacher", "admin"],
-    },
+    Enums: {},
   },
 } as const

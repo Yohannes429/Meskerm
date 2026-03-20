@@ -55,12 +55,12 @@ const CreateExam = () => {
     }
 
     const { data: profile } = await supabase
-      .from("profiles")
+      .from("profiles" as any)
       .select("role")
       .eq("id", session.user.id)
       .single();
 
-    if (profile?.role === "student") {
+    if ((profile as any)?.role === "student") {
       navigate("/student-dashboard");
     }
   };
@@ -69,31 +69,32 @@ const CreateExam = () => {
     if (!examId) return;
 
     const { data: exam } = await supabase
-      .from("exams")
+      .from("exams" as any)
       .select("*")
       .eq("id", examId)
       .single();
 
     if (exam) {
+      const e = exam as any;
       setExamData({
-        title: exam.title,
-        description: exam.description || "",
-        subject: exam.subject,
-        grade_level: exam.grade_level.toString(),
-        duration_minutes: exam.duration_minutes.toString(),
-        total_marks: exam.total_marks.toString(),
-        passing_marks: exam.passing_marks.toString(),
-        instructions: exam.instructions || "",
+        title: e.title,
+        description: e.description || "",
+        subject: e.subject,
+        grade_level: e.grade_level.toString(),
+        duration_minutes: e.duration_minutes.toString(),
+        total_marks: e.total_marks.toString(),
+        passing_marks: e.passing_marks.toString(),
+        instructions: e.instructions || "",
       });
 
       const { data: questionsData } = await supabase
-        .from("questions")
+        .from("questions" as any)
         .select("*")
         .eq("exam_id", examId)
         .order("order_number");
 
       if (questionsData) {
-        setQuestions(questionsData.map(q => ({
+        setQuestions(questionsData.map((q: any) => ({
           id: q.id,
           question_text: q.question_text,
           question_type: q.question_type,
@@ -150,24 +151,24 @@ const CreateExam = () => {
 
       if (examId) {
         await supabase
-          .from("exams")
+          .from("exams" as any)
           .update(examPayload)
           .eq("id", examId);
       } else {
         const { data: newExam, error } = await supabase
-          .from("exams")
-          .insert(examPayload)
+          .from("exams" as any)
+          .insert(examPayload as any)
           .select()
           .single();
 
         if (error) throw error;
-        savedExamId = newExam.id;
+        savedExamId = (newExam as any).id;
       }
 
       // Delete existing questions if editing
       if (examId) {
         await supabase
-          .from("questions")
+          .from("questions" as any)
           .delete()
           .eq("exam_id", examId);
       }
@@ -184,7 +185,7 @@ const CreateExam = () => {
         order_number: index + 1,
       }));
 
-      await supabase.from("questions").insert(questionsPayload);
+      await supabase.from("questions" as any).insert(questionsPayload as any);
 
       toast.success(examId ? "Exam updated successfully" : "Exam created successfully");
       navigate("/teacher-dashboard");
