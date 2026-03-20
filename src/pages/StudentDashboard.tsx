@@ -66,16 +66,15 @@ const StudentDashboard = () => {
   const fetchExams = async (userId: string) => {
     // Fetch available exams
     const { data: examsData } = await supabase
-      .from("exams")
+      .from("exams" as any)
       .select("*")
       .eq("status", "published")
       .order("created_at", { ascending: false });
 
-    setAvailableExams(examsData || []);
+    setAvailableExams((examsData as any) || []);
 
-    // Fetch student's exam attempts
     const { data: studentExamsData } = await supabase
-      .from("student_exams")
+      .from("student_exams" as any)
       .select(`
         *,
         exam:exams(*)
@@ -83,7 +82,7 @@ const StudentDashboard = () => {
       .eq("student_id", userId)
       .order("created_at", { ascending: false });
 
-    setMyExams(studentExamsData || []);
+    setMyExams((studentExamsData as any) || []);
   };
 
   const handleSignOut = async () => {
