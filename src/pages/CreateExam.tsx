@@ -155,13 +155,13 @@ const CreateExam = () => {
           .eq("id", examId);
       } else {
         const { data: newExam, error } = await supabase
-          .from("exams")
-          .insert(examPayload)
+          .from("exams" as any)
+          .insert(examPayload as any)
           .select()
           .single();
 
         if (error) throw error;
-        savedExamId = newExam.id;
+        savedExamId = (newExam as any).id;
       }
 
       // Delete existing questions if editing
