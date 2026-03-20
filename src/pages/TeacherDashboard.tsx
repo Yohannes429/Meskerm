@@ -91,12 +91,12 @@ const TeacherDashboard = () => {
   const fetchData = async (userId: string) => {
     // Fetch teacher's exams
     const { data: examsData } = await supabase
-      .from("exams")
+      .from("exams" as any)
       .select("*")
       .eq("teacher_id", userId)
       .order("created_at", { ascending: false });
 
-    setExams(examsData || []);
+    setExams((examsData as any) || []);
 
     // Fetch recent student results
     const { data: resultsData } = await supabase
