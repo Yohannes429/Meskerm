@@ -14,7 +14,217 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      exams: {
+        Row: {
+          created_at: string
+          description: string | null
+          duration_minutes: number
+          grade_level: number
+          id: string
+          instructions: string | null
+          passing_marks: number
+          status: string
+          subject: string
+          teacher_id: string
+          title: string
+          total_marks: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          duration_minutes?: number
+          grade_level?: number
+          id?: string
+          instructions?: string | null
+          passing_marks?: number
+          status?: string
+          subject: string
+          teacher_id: string
+          title: string
+          total_marks?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          duration_minutes?: number
+          grade_level?: number
+          id?: string
+          instructions?: string | null
+          passing_marks?: number
+          status?: string
+          subject?: string
+          teacher_id?: string
+          title?: string
+          total_marks?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string | null
+          full_name: string | null
+          id: string
+          role: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id: string
+          role?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          role?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      questions: {
+        Row: {
+          correct_answer: string | null
+          created_at: string
+          exam_id: string
+          explanation: string | null
+          id: string
+          marks: number
+          options: Json | null
+          order_number: number
+          question_text: string
+          question_type: string
+        }
+        Insert: {
+          correct_answer?: string | null
+          created_at?: string
+          exam_id: string
+          explanation?: string | null
+          id?: string
+          marks?: number
+          options?: Json | null
+          order_number?: number
+          question_text: string
+          question_type?: string
+        }
+        Update: {
+          correct_answer?: string | null
+          created_at?: string
+          exam_id?: string
+          explanation?: string | null
+          id?: string
+          marks?: number
+          options?: Json | null
+          order_number?: number
+          question_text?: string
+          question_type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "questions_exam_id_fkey"
+            columns: ["exam_id"]
+            isOneToOne: false
+            referencedRelation: "exams"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      student_answers: {
+        Row: {
+          answer_text: string | null
+          created_at: string
+          id: string
+          is_correct: boolean | null
+          marks_awarded: number | null
+          question_id: string
+          student_exam_id: string
+        }
+        Insert: {
+          answer_text?: string | null
+          created_at?: string
+          id?: string
+          is_correct?: boolean | null
+          marks_awarded?: number | null
+          question_id: string
+          student_exam_id: string
+        }
+        Update: {
+          answer_text?: string | null
+          created_at?: string
+          id?: string
+          is_correct?: boolean | null
+          marks_awarded?: number | null
+          question_id?: string
+          student_exam_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "student_answers_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "questions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "student_answers_student_exam_id_fkey"
+            columns: ["student_exam_id"]
+            isOneToOne: false
+            referencedRelation: "student_exams"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      student_exams: {
+        Row: {
+          created_at: string
+          exam_id: string
+          id: string
+          percentage: number | null
+          score: number | null
+          status: string
+          student_id: string
+          submitted_at: string | null
+          total_marks: number | null
+        }
+        Insert: {
+          created_at?: string
+          exam_id: string
+          id?: string
+          percentage?: number | null
+          score?: number | null
+          status?: string
+          student_id: string
+          submitted_at?: string | null
+          total_marks?: number | null
+        }
+        Update: {
+          created_at?: string
+          exam_id?: string
+          id?: string
+          percentage?: number | null
+          score?: number | null
+          status?: string
+          student_id?: string
+          submitted_at?: string | null
+          total_marks?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "student_exams_exam_id_fkey"
+            columns: ["exam_id"]
+            isOneToOne: false
+            referencedRelation: "exams"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
