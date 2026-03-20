@@ -75,15 +75,16 @@ const CreateExam = () => {
       .single();
 
     if (exam) {
+      const e = exam as any;
       setExamData({
-        title: exam.title,
-        description: exam.description || "",
-        subject: exam.subject,
-        grade_level: exam.grade_level.toString(),
-        duration_minutes: exam.duration_minutes.toString(),
-        total_marks: exam.total_marks.toString(),
-        passing_marks: exam.passing_marks.toString(),
-        instructions: exam.instructions || "",
+        title: e.title,
+        description: e.description || "",
+        subject: e.subject,
+        grade_level: e.grade_level.toString(),
+        duration_minutes: e.duration_minutes.toString(),
+        total_marks: e.total_marks.toString(),
+        passing_marks: e.passing_marks.toString(),
+        instructions: e.instructions || "",
       });
 
       const { data: questionsData } = await supabase
