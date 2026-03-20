@@ -150,7 +150,7 @@ const CreateExam = () => {
 
       if (examId) {
         await supabase
-          .from("exams")
+          .from("exams" as any)
           .update(examPayload)
           .eq("id", examId);
       } else {
