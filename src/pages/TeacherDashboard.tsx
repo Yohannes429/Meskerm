@@ -111,7 +111,7 @@ const TeacherDashboard = () => {
       .order("submitted_at", { ascending: false })
       .limit(10);
 
-    setStudentResults(resultsData || []);
+    setStudentResults((resultsData as any) || []);
   };
 
   const handleSignOut = async () => {

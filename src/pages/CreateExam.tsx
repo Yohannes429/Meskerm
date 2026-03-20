@@ -93,7 +93,7 @@ const CreateExam = () => {
         .order("order_number");
 
       if (questionsData) {
-        setQuestions(questionsData.map(q => ({
+        setQuestions(questionsData.map((q: any) => ({
           id: q.id,
           question_text: q.question_text,
           question_type: q.question_type,
