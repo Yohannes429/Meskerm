@@ -71,17 +71,19 @@ const TeacherDashboard = () => {
     }
 
     const { data: profileData } = await supabase
-      .from("profiles")
+      .from("profiles" as any)
       .select("*")
       .eq("id", user.id)
       .single();
 
-    if (!profileData || (profileData.role !== "teacher" && profileData.role !== "admin")) {
+    const role = (profileData as any)?.role || user.user_metadata?.role || "student";
+
+    if (role !== "teacher" && role !== "admin") {
       navigate("/student-dashboard");
       return;
     }
 
-    setProfile(profileData);
+    setProfile(profileData || { full_name: user.user_metadata?.full_name, role });
     await fetchData(user.id);
     setLoading(false);
   };
