@@ -123,7 +123,7 @@ const TeacherDashboard = () => {
 
   const publishExam = async (examId: string) => {
     const { error } = await supabase
-      .from("exams")
+      .from("exams" as any)
       .update({ status: "published" })
       .eq("id", examId);
 
