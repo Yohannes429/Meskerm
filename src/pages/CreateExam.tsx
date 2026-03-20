@@ -55,12 +55,12 @@ const CreateExam = () => {
     }
 
     const { data: profile } = await supabase
-      .from("profiles")
+      .from("profiles" as any)
       .select("role")
       .eq("id", session.user.id)
       .single();
 
-    if (profile?.role === "student") {
+    if ((profile as any)?.role === "student") {
       navigate("/student-dashboard");
     }
   };
