@@ -61,7 +61,7 @@ const TakeExam = () => {
 
       if (examData) {
         setExam(examData);
-        setTimeRemaining(examData.duration_minutes * 60);
+        setTimeRemaining((examData as any).duration_minutes * 60);
       }
 
       const { data: questionsData } = await supabase
