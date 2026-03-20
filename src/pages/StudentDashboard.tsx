@@ -96,13 +96,13 @@ const StudentDashboard = () => {
     if (!user) return;
 
     const { data, error } = await supabase
-      .from("student_exams")
+      .from("student_exams" as any)
       .insert({
         student_id: user.id,
         exam_id: examId,
         status: "in_progress",
         total_marks: totalMarks,
-      })
+      } as any)
       .select()
       .single();
 
@@ -111,7 +111,7 @@ const StudentDashboard = () => {
       return;
     }
 
-    navigate(`/exam/${examId}/${data.id}`);
+    navigate(`/exam/${examId}/${(data as any).id}`);
   };
 
   if (loading) {
