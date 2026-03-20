@@ -126,7 +126,7 @@ const TakeExam = () => {
       // Update student exam status
       const percentage = (totalScore / exam.total_marks) * 100;
       await supabase
-        .from("student_exams")
+        .from("student_exams" as any)
         .update({
           status: "completed",
           score: totalScore,
