@@ -139,7 +139,7 @@ const TeacherDashboard = () => {
 
   const deleteExam = async (examId: string) => {
     const { error } = await supabase
-      .from("exams")
+      .from("exams" as any)
       .delete()
       .eq("id", examId);
 
