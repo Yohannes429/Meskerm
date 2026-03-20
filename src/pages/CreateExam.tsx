@@ -87,7 +87,7 @@ const CreateExam = () => {
       });
 
       const { data: questionsData } = await supabase
-        .from("questions")
+        .from("questions" as any)
         .select("*")
         .eq("exam_id", examId)
         .order("order_number");
