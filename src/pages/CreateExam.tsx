@@ -69,7 +69,7 @@ const CreateExam = () => {
     if (!examId) return;
 
     const { data: exam } = await supabase
-      .from("exams")
+      .from("exams" as any)
       .select("*")
       .eq("id", examId)
       .single();
