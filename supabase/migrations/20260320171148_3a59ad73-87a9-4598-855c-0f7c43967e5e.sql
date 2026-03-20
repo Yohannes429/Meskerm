@@ -1,0 +1,1 @@
+INSERT INTO public.profiles (id, full_name, role, email) VALUES ('ad4c3c90-b8a9-41c1-8510-c9e81eb561fe', 'Yohannes', 'teacher', 'teshomeyohannes29@gmail.com')
