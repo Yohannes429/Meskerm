@@ -116,7 +116,7 @@ const TakeExam = () => {
 
       // Delete existing answers
       await supabase
-        .from("student_answers")
+        .from("student_answers" as any)
         .delete()
         .eq("student_exam_id", studentExamId);
 
