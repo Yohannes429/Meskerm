@@ -100,14 +100,13 @@ const TeacherDashboard = () => {
 
     // Fetch recent student results
     const { data: resultsData } = await supabase
-      .from("student_exams")
+      .from("student_exams" as any)
       .select(`
         id,
         student_id,
         score,
         percentage,
-        status,
-        profiles:student_id(full_name)
+        status
       `)
       .eq("status", "completed")
       .order("submitted_at", { ascending: false })
