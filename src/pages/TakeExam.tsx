@@ -65,13 +65,13 @@ const TakeExam = () => {
       }
 
       const { data: questionsData } = await supabase
-        .from("questions")
+        .from("questions" as any)
         .select("*")
         .eq("exam_id", examId)
         .order("order_number");
 
       if (questionsData) {
-        setQuestions(questionsData);
+        setQuestions(questionsData as any);
       }
 
       // Load existing answers if any
