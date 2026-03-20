@@ -184,7 +184,7 @@ const CreateExam = () => {
         order_number: index + 1,
       }));
 
-      await supabase.from("questions").insert(questionsPayload);
+      await supabase.from("questions" as any).insert(questionsPayload as any);
 
       toast.success(examId ? "Exam updated successfully" : "Exam created successfully");
       navigate("/teacher-dashboard");
