@@ -121,7 +121,7 @@ const TakeExam = () => {
         .eq("student_exam_id", studentExamId);
 
       // Insert new answers
-      await supabase.from("student_answers").insert(answersToSubmit);
+      await supabase.from("student_answers" as any).insert(answersToSubmit as any);
 
       // Update student exam status
       const percentage = (totalScore / exam.total_marks) * 100;
