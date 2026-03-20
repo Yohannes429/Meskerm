@@ -46,17 +46,19 @@ const StudentDashboard = () => {
     }
 
     const { data: profileData } = await supabase
-      .from("profiles")
+      .from("profiles" as any)
       .select("*")
       .eq("id", user.id)
       .single();
 
-    if (!profileData || profileData.role !== "student") {
+    const role = (profileData as any)?.role || user.user_metadata?.role || "student";
+
+    if (role !== "student") {
       navigate("/teacher-dashboard");
       return;
     }
 
-    setProfile(profileData);
+    setProfile(profileData || { full_name: user.user_metadata?.full_name, role });
     await fetchExams(user.id);
     setLoading(false);
   };
@@ -64,16 +66,15 @@ const StudentDashboard = () => {
   const fetchExams = async (userId: string) => {
     // Fetch available exams
     const { data: examsData } = await supabase
-      .from("exams")
+      .from("exams" as any)
       .select("*")
       .eq("status", "published")
       .order("created_at", { ascending: false });
 
-    setAvailableExams(examsData || []);
+    setAvailableExams((examsData as any) || []);
 
-    // Fetch student's exam attempts
     const { data: studentExamsData } = await supabase
-      .from("student_exams")
+      .from("student_exams" as any)
       .select(`
         *,
         exam:exams(*)
@@ -81,7 +82,7 @@ const StudentDashboard = () => {
       .eq("student_id", userId)
       .order("created_at", { ascending: false });
 
-    setMyExams(studentExamsData || []);
+    setMyExams((studentExamsData as any) || []);
   };
 
   const handleSignOut = async () => {
@@ -95,13 +96,13 @@ const StudentDashboard = () => {
     if (!user) return;
 
     const { data, error } = await supabase
-      .from("student_exams")
+      .from("student_exams" as any)
       .insert({
         student_id: user.id,
         exam_id: examId,
         status: "in_progress",
         total_marks: totalMarks,
-      })
+      } as any)
       .select()
       .single();
 
@@ -110,7 +111,7 @@ const StudentDashboard = () => {
       return;
     }
 
-    navigate(`/exam/${examId}/${data.id}`);
+    navigate(`/exam/${examId}/${(data as any).id}`);
   };
 
   if (loading) {

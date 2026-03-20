@@ -25,13 +25,18 @@ const Auth = () => {
   }, []);
 
   const checkUserRole = async (userId: string) => {
+    const { data: { user } } = await supabase.auth.getUser();
+    const metaRole = user?.user_metadata?.role;
+
     const { data } = await supabase
-      .from("profiles")
+      .from("profiles" as any)
       .select("role")
       .eq("id", userId)
       .single();
 
-    if (data?.role === "teacher" || data?.role === "admin") {
+    const role = (data as any)?.role || metaRole || "student";
+
+    if (role === "teacher" || role === "admin") {
       navigate("/teacher-dashboard");
     } else {
       navigate("/student-dashboard");

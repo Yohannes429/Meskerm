@@ -54,35 +54,35 @@ const TakeExam = () => {
   const loadExamData = async () => {
     try {
       const { data: examData } = await supabase
-        .from("exams")
+        .from("exams" as any)
         .select("*")
         .eq("id", examId)
         .single();
 
       if (examData) {
         setExam(examData);
-        setTimeRemaining(examData.duration_minutes * 60);
+        setTimeRemaining((examData as any).duration_minutes * 60);
       }
 
       const { data: questionsData } = await supabase
-        .from("questions")
+        .from("questions" as any)
         .select("*")
         .eq("exam_id", examId)
         .order("order_number");
 
       if (questionsData) {
-        setQuestions(questionsData);
+        setQuestions(questionsData as any);
       }
 
       // Load existing answers if any
       const { data: existingAnswers } = await supabase
-        .from("student_answers")
+        .from("student_answers" as any)
         .select("question_id, answer_text")
         .eq("student_exam_id", studentExamId);
 
       if (existingAnswers) {
         const answersMap: Record<string, string> = {};
-        existingAnswers.forEach((ans) => {
+        (existingAnswers as any[]).forEach((ans) => {
           answersMap[ans.question_id] = ans.answer_text;
         });
         setAnswers(answersMap);
@@ -116,17 +116,17 @@ const TakeExam = () => {
 
       // Delete existing answers
       await supabase
-        .from("student_answers")
+        .from("student_answers" as any)
         .delete()
         .eq("student_exam_id", studentExamId);
 
       // Insert new answers
-      await supabase.from("student_answers").insert(answersToSubmit);
+      await supabase.from("student_answers" as any).insert(answersToSubmit as any);
 
       // Update student exam status
       const percentage = (totalScore / exam.total_marks) * 100;
       await supabase
-        .from("student_exams")
+        .from("student_exams" as any)
         .update({
           status: "completed",
           score: totalScore,
