@@ -215,6 +215,47 @@ const LandingPage = () => {
         </div>
       </section>
 
+      {/* Latest News Section */}
+      {latestNews.length > 0 && (
+        <section className="py-20">
+          <div className="container mx-auto px-4">
+            <div className="mb-12 text-center">
+              <h2 className="mb-4 text-3xl font-bold text-foreground lg:text-4xl">Latest News & Updates</h2>
+              <p className="mx-auto max-w-2xl text-lg text-muted-foreground">Stay informed about what's happening at Meskerm</p>
+            </div>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {latestNews.map((post) => (
+                <Card key={post.id} className="overflow-hidden border-2 transition-all hover:border-primary hover:shadow-lg">
+                  {post.image_url && (
+                    <div className="aspect-video w-full overflow-hidden">
+                      <img src={post.image_url} alt={post.title} className="h-full w-full object-cover transition-transform hover:scale-105" />
+                    </div>
+                  )}
+                  <CardHeader>
+                    <div className="mb-2 flex items-center justify-between">
+                      <Badge variant="secondary">{post.category}</Badge>
+                      <div className="flex items-center text-xs text-muted-foreground">
+                        <Calendar className="mr-1 h-3 w-3" />
+                        {new Date(post.created_at).toLocaleDateString()}
+                      </div>
+                    </div>
+                    <CardTitle className="line-clamp-2">{post.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription className="line-clamp-3">{post.excerpt || post.content.substring(0, 150)}</CardDescription>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+            <div className="mt-8 text-center">
+              <Link to="/news">
+                <Button variant="outline">View All News <ArrowRight className="ml-2 h-4 w-4" /></Button>
+              </Link>
+            </div>
+          </div>
+        </section>
+      )
+
       {/* CTA Section */}
       <section className="py-20">
         <div className="container mx-auto px-4">
