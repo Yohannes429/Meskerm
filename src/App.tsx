@@ -12,9 +12,12 @@ import Auth from "./pages/Auth";
 import Register from "./pages/Register";
 import StudentDashboard from "./pages/StudentDashboard";
 import TeacherDashboard from "./pages/TeacherDashboard";
+import AdminDashboard from "./pages/AdminDashboard";
 import CreateExam from "./pages/CreateExam";
 import TakeExam from "./pages/TakeExam";
+import ExamResults from "./pages/ExamResults";
 import NotFound from "./pages/NotFound";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
@@ -32,11 +35,33 @@ const App = () => (
           <Route path="/contact" element={<Contact />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/student-dashboard" element={<StudentDashboard />} />
-          <Route path="/teacher-dashboard" element={<TeacherDashboard />} />
-          <Route path="/create-exam" element={<CreateExam />} />
-          <Route path="/exam/:examId/edit" element={<CreateExam />} />
+          <Route path="/student-dashboard" element={
+            <ProtectedRoute allowedRoles={["student"]}>
+              <StudentDashboard />
+            </ProtectedRoute>
+          } />
+          <Route path="/teacher-dashboard" element={
+            <ProtectedRoute allowedRoles={["teacher", "admin"]}>
+              <TeacherDashboard />
+            </ProtectedRoute>
+          } />
+          <Route path="/admin-dashboard" element={
+            <ProtectedRoute allowedRoles={["admin"]}>
+              <AdminDashboard />
+            </ProtectedRoute>
+          } />
+          <Route path="/create-exam" element={
+            <ProtectedRoute allowedRoles={["teacher", "admin"]}>
+              <CreateExam />
+            </ProtectedRoute>
+          } />
+          <Route path="/exam/:examId/edit" element={
+            <ProtectedRoute allowedRoles={["teacher", "admin"]}>
+              <CreateExam />
+            </ProtectedRoute>
+          } />
           <Route path="/exam/:examId/:studentExamId" element={<TakeExam />} />
+          <Route path="/results/:studentExamId" element={<ExamResults />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
