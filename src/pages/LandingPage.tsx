@@ -9,7 +9,31 @@ import Footer from "@/components/Footer";
 import heroImage from "@/assets/hero-image.jpg";
 import { supabase } from "@/integrations/supabase/client";
 
+interface NewsPost {
+  id: string;
+  title: string;
+  excerpt: string | null;
+  content: string;
+  image_url: string | null;
+  category: string;
+  created_at: string;
+}
+
 const LandingPage = () => {
+  const [latestNews, setLatestNews] = useState<NewsPost[]>([]);
+
+  useEffect(() => {
+    const fetchNews = async () => {
+      const { data } = await supabase
+        .from("news_posts" as any)
+        .select("*")
+        .eq("status", "published")
+        .order("created_at", { ascending: false })
+        .limit(3);
+      setLatestNews((data as any) || []);
+    };
+    fetchNews();
+  }, []);
   const features = [
     {
       icon: BookOpen,
