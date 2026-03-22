@@ -36,7 +36,9 @@ const Auth = () => {
 
     const role = (data as any)?.role || metaRole || "student";
 
-    if (role === "teacher" || role === "admin") {
+    if (role === "admin") {
+      navigate("/admin-dashboard");
+    } else if (role === "teacher") {
       navigate("/teacher-dashboard");
     } else {
       navigate("/student-dashboard");
