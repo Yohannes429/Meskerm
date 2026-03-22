@@ -254,7 +254,8 @@ const LandingPage = () => {
             </div>
           </div>
         </section>
-      )
+      )}
+
 
       {/* CTA Section */}
       <section className="py-20">
