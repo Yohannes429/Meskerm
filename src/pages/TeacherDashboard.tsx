@@ -158,29 +158,23 @@ const TeacherDashboard = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-secondary/5">
-      <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-10">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between flex-wrap gap-3">
-            <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-secondary">
-                <GraduationCap className="h-6 w-6 text-white" />
-              </div>
-              <div>
-                <h1 className="text-xl font-bold">Teacher Dashboard</h1>
-                <p className="text-sm text-muted-foreground">Welcome back, {profile?.full_name}</p>
-              </div>
+      <Navbar />
+      <div className="container mx-auto px-4 py-4">
+        <div className="flex items-center justify-between flex-wrap gap-3 mb-4">
+          <div className="flex items-center gap-3">
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-secondary">
+              <GraduationCap className="h-6 w-6 text-white" />
             </div>
-            <div className="flex gap-2">
-              <Button onClick={() => navigate("/create-exam")} size="sm">
-                <Plus className="h-4 w-4 mr-2" /> Create Exam
-              </Button>
-              <Button variant="outline" onClick={handleSignOut} size="sm">
-                <LogOut className="h-4 w-4 mr-2" /> Sign Out
-              </Button>
+            <div>
+              <h1 className="text-xl font-bold">Teacher Dashboard</h1>
+              <p className="text-sm text-muted-foreground">Welcome back, {profile?.full_name}</p>
             </div>
           </div>
+          <Button onClick={() => navigate("/create-exam")} size="sm">
+            <Plus className="h-4 w-4 mr-2" /> Create Exam
+          </Button>
         </div>
-      </header>
+      </div>
 
       <main className="container mx-auto px-4 py-8">
         <div className="grid gap-4 grid-cols-2 md:grid-cols-4 mb-8">
