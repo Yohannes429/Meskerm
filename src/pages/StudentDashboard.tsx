@@ -233,6 +233,7 @@ const StudentDashboard = () => {
           </TabsContent>
         </Tabs>
       </main>
+      <Footer />
     </div>
   );
 };

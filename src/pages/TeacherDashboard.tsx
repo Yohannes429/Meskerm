@@ -347,6 +347,7 @@ const TeacherDashboard = () => {
           </TabsContent>
         </Tabs>
       </main>
+      <Footer />
     </div>
   );
 };
