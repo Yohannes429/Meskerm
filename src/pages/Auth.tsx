@@ -202,7 +202,7 @@ const Auth = () => {
                     </div>
                   </form>
                 </div>
-              )
+              )}
             </TabsContent>
 
             <TabsContent value="signup">
