@@ -15,8 +15,10 @@ import {
 import {
   Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle,
 } from "@/components/ui/dialog";
-import { Shield, Plus, Edit, Trash2, LogOut, Newspaper, Eye, EyeOff, Loader2 } from "lucide-react";
+import { Shield, Plus, Edit, Trash2, Newspaper, Eye, EyeOff, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 interface NewsPost {
   id: string;
