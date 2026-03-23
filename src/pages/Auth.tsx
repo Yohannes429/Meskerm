@@ -172,7 +172,37 @@ const Auth = () => {
                     "Sign In"
                   )}
                 </Button>
+                <button
+                  type="button"
+                  onClick={() => setShowForgotPassword(true)}
+                  className="w-full text-sm text-primary hover:underline mt-2"
+                >
+                  Forgot your password?
+                </button>
               </form>
+
+              {showForgotPassword && (
+                <div className="mt-4 p-4 border rounded-lg bg-muted/50">
+                  <h3 className="text-sm font-medium mb-2">Reset Password</h3>
+                  <form onSubmit={handleForgotPassword} className="space-y-3">
+                    <Input
+                      type="email"
+                      placeholder="Enter your email"
+                      value={resetEmail}
+                      onChange={(e) => setResetEmail(e.target.value)}
+                      required
+                    />
+                    <div className="flex gap-2">
+                      <Button type="submit" size="sm" disabled={loading}>
+                        {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Send Reset Link"}
+                      </Button>
+                      <Button type="button" variant="ghost" size="sm" onClick={() => setShowForgotPassword(false)}>
+                        Cancel
+                      </Button>
+                    </div>
+                  </form>
+                </div>
+              )
             </TabsContent>
 
             <TabsContent value="signup">
