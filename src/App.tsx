@@ -16,6 +16,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import CreateExam from "./pages/CreateExam";
 import TakeExam from "./pages/TakeExam";
 import ExamResults from "./pages/ExamResults";
+import LiveExamMonitor from "./pages/LiveExamMonitor";
 import ResetPassword from "./pages/ResetPassword";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
