@@ -243,6 +243,11 @@ const TeacherDashboard = () => {
                           {exam.status === "draft" && (
                             <Button size="sm" onClick={() => publishExam(exam.id)}><Eye className="h-4 w-4 mr-1" /> Publish</Button>
                           )}
+                          {exam.status === "published" && (
+                            <Button size="sm" variant="outline" onClick={() => navigate(`/exam/${exam.id}/monitor`)}>
+                              <Monitor className="h-4 w-4 mr-1" /> Monitor
+                            </Button>
+                          )}
                           <Button size="sm" variant="outline" onClick={() => navigate(`/exam/${exam.id}/edit`)}><Edit className="h-4 w-4 mr-1" /> Edit</Button>
                           <AlertDialog>
                             <AlertDialogTrigger asChild><Button size="sm" variant="destructive"><Trash2 className="h-4 w-4" /></Button></AlertDialogTrigger>
