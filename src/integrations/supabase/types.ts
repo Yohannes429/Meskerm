@@ -23,6 +23,7 @@ export type Database = {
           id: string
           instructions: string | null
           passing_marks: number
+          session_status: string
           status: string
           subject: string
           teacher_id: string
@@ -38,6 +39,7 @@ export type Database = {
           id?: string
           instructions?: string | null
           passing_marks?: number
+          session_status?: string
           status?: string
           subject: string
           teacher_id: string
@@ -53,6 +55,7 @@ export type Database = {
           id?: string
           instructions?: string | null
           passing_marks?: number
+          session_status?: string
           status?: string
           subject?: string
           teacher_id?: string
@@ -225,33 +228,48 @@ export type Database = {
           created_at: string
           exam_id: string
           id: string
+          is_disqualified: boolean
+          leave_approved: boolean | null
+          leave_requested: boolean
           percentage: number | null
+          raise_hand: boolean
           score: number | null
           status: string
           student_id: string
           submitted_at: string | null
+          tab_warnings: number
           total_marks: number | null
         }
         Insert: {
           created_at?: string
           exam_id: string
           id?: string
+          is_disqualified?: boolean
+          leave_approved?: boolean | null
+          leave_requested?: boolean
           percentage?: number | null
+          raise_hand?: boolean
           score?: number | null
           status?: string
           student_id: string
           submitted_at?: string | null
+          tab_warnings?: number
           total_marks?: number | null
         }
         Update: {
           created_at?: string
           exam_id?: string
           id?: string
+          is_disqualified?: boolean
+          leave_approved?: boolean | null
+          leave_requested?: boolean
           percentage?: number | null
+          raise_hand?: boolean
           score?: number | null
           status?: string
           student_id?: string
           submitted_at?: string | null
+          tab_warnings?: number
           total_marks?: number | null
         }
         Relationships: [

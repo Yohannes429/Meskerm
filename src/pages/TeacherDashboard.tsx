@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import {
-  BookOpen, Users, TrendingUp, Plus, Edit, Trash2, Eye, GraduationCap, Search,
+  BookOpen, Users, TrendingUp, Plus, Edit, Trash2, Eye, GraduationCap, Search, Monitor,
 } from "lucide-react";
 import { toast } from "sonner";
 import Navbar from "@/components/Navbar";
@@ -242,6 +242,11 @@ const TeacherDashboard = () => {
                         <div className="flex gap-2">
                           {exam.status === "draft" && (
                             <Button size="sm" onClick={() => publishExam(exam.id)}><Eye className="h-4 w-4 mr-1" /> Publish</Button>
+                          )}
+                          {exam.status === "published" && (
+                            <Button size="sm" variant="outline" onClick={() => navigate(`/exam/${exam.id}/monitor`)}>
+                              <Monitor className="h-4 w-4 mr-1" /> Monitor
+                            </Button>
                           )}
                           <Button size="sm" variant="outline" onClick={() => navigate(`/exam/${exam.id}/edit`)}><Edit className="h-4 w-4 mr-1" /> Edit</Button>
                           <AlertDialog>
