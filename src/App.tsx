@@ -64,6 +64,11 @@ const App = () => (
             </ProtectedRoute>
           } />
           <Route path="/exam/:examId/:studentExamId" element={<TakeExam />} />
+          <Route path="/exam/:examId/monitor" element={
+            <ProtectedRoute allowedRoles={["teacher", "admin"]}>
+              <LiveExamMonitor />
+            </ProtectedRoute>
+          } />
           <Route path="/results/:studentExamId" element={<ExamResults />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
