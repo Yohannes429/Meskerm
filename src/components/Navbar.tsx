@@ -99,9 +99,12 @@ const Navbar = () => {
 
           <div className="hidden md:flex md:items-center md:space-x-4">
             {user ? (
-              <Button variant="outline" onClick={handleSignOut} size="sm">
-                <LogOut className="h-4 w-4 mr-2" /> Sign Out
-              </Button>
+              <>
+                <NotificationBell userId={user.id} />
+                <Button variant="outline" onClick={handleSignOut} size="sm">
+                  <LogOut className="h-4 w-4 mr-2" /> Sign Out
+                </Button>
+              </>
             ) : (
               <>
                 <Link to="/auth">
