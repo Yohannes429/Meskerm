@@ -36,6 +36,8 @@ const CreateExam = () => {
     total_marks: "",
     passing_marks: "",
     instructions: "",
+    scheduled_start: "",
+    scheduled_end: "",
   });
 
   const [questions, setQuestions] = useState<Question[]>([]);
