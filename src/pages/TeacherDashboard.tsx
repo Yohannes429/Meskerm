@@ -123,6 +123,21 @@ const TeacherDashboard = () => {
     const { error } = await supabase.from("exams" as any).update({ status: "published" }).eq("id", examId);
     if (error) { toast.error("Failed to publish exam"); return; }
     toast.success("Exam published successfully");
+
+    // Send notification to all students
+    const exam = exams.find((e) => e.id === examId);
+    const { data: students } = await supabase.from("profiles" as any).select("id").eq("role", "student");
+    if (students && exam) {
+      const notifs = (students as any[]).map((s: any) => ({
+        user_id: s.id,
+        title: "New Exam Available",
+        message: `"${exam.title}" (${exam.subject}) has been published. Good luck!`,
+        type: "exam",
+        link: "/student-dashboard",
+      }));
+      await supabase.from("notifications" as any).insert(notifs as any);
+    }
+
     const { data: { user } } = await supabase.auth.getUser();
     if (user) await fetchData(user.id);
   };
