@@ -319,6 +319,33 @@ const CreateExam = () => {
                   rows={4}
                 />
               </div>
+
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="scheduled_start">Scheduled Start (optional)</Label>
+                  <Input
+                    id="scheduled_start"
+                    type="datetime-local"
+                    value={examData.scheduled_start ? examData.scheduled_start.slice(0, 16) : ""}
+                    onChange={(e) => setExamData({ ...examData, scheduled_start: e.target.value ? new Date(e.target.value).toISOString() : "" })}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="scheduled_end">Scheduled End (optional)</Label>
+                  <Input
+                    id="scheduled_end"
+                    type="datetime-local"
+                    value={examData.scheduled_end ? examData.scheduled_end.slice(0, 16) : ""}
+                    onChange={(e) => setExamData({ ...examData, scheduled_end: e.target.value ? new Date(e.target.value).toISOString() : "" })}
+                  />
+                </div>
+              </div>
+                  value={examData.instructions}
+                  onChange={(e) => setExamData({ ...examData, instructions: e.target.value })}
+                  placeholder="Instructions for students taking the exam"
+                  rows={4}
+                />
+              </div>
             </CardContent>
           </Card>
 

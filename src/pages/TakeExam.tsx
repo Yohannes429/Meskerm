@@ -131,17 +131,57 @@ const TakeExam = () => {
     return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
   }, [isDisqualified, sessionStatus, studentExamId]);
 
+  // Seeded shuffle for deterministic randomization per student
+  const seededShuffle = <T,>(arr: T[], seed: string): T[] => {
+    const shuffled = [...arr];
+    let hash = 0;
+    for (let i = 0; i < seed.length; i++) {
+      hash = ((hash << 5) - hash) + seed.charCodeAt(i);
+      hash |= 0;
+    }
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      hash = (hash * 16807 + 12345) & 0x7fffffff;
+      const j = hash % (i + 1);
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  };
+
   const loadExamData = async () => {
     try {
       const { data: examData } = await supabase.from("exams" as any).select("*").eq("id", examId).single();
       if (examData) {
-        setExam(examData);
-        setTimeRemaining((examData as any).duration_minutes * 60);
-        setSessionStatus((examData as any).session_status || "not_started");
+        const e = examData as any;
+        setExam(e);
+        setTimeRemaining(e.duration_minutes * 60);
+        setSessionStatus(e.session_status || "not_started");
+
+        // Check scheduling
+        if (e.scheduled_start && new Date(e.scheduled_start) > new Date()) {
+          toast.error("This exam hasn't started yet.");
+          navigate("/student-dashboard");
+          return;
+        }
+        if (e.scheduled_end && new Date(e.scheduled_end) < new Date()) {
+          toast.error("This exam window has ended.");
+          navigate("/student-dashboard");
+          return;
+        }
       }
 
       const { data: questionsData } = await supabase.from("questions" as any).select("*").eq("exam_id", examId).order("order_number");
-      if (questionsData) setQuestions(questionsData as any);
+      if (questionsData) {
+        // Randomize questions and MC options per student
+        const seed = studentExamId || "default";
+        let qs = seededShuffle(questionsData as any[], seed);
+        qs = qs.map((q: any) => ({
+          ...q,
+          options: q.question_type === "multiple_choice" && q.options
+            ? seededShuffle(q.options as string[], seed + q.id)
+            : q.options,
+        }));
+        setQuestions(qs);
+      }
 
       const { data: seData } = await supabase.from("student_exams" as any).select("*").eq("id", studentExamId).single();
       if (seData) {
