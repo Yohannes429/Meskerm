@@ -160,6 +160,8 @@ const Navbar = () => {
               )}
               <div className="space-y-2 pt-4">
                 {user ? (
+                  <>
+                  <div className="flex justify-center mb-2"><NotificationBell userId={user.id} /></div>
                   <Button variant="outline" className="w-full" onClick={() => { handleSignOut(); setIsOpen(false); }}>
                     <LogOut className="h-4 w-4 mr-2" /> Sign Out
                   </Button>
