@@ -244,9 +244,17 @@ const TeacherDashboard = () => {
                             <Button size="sm" onClick={() => publishExam(exam.id)}><Eye className="h-4 w-4 mr-1" /> Publish</Button>
                           )}
                           {exam.status === "published" && (
-                            <Button size="sm" variant="outline" onClick={() => navigate(`/exam/${exam.id}/monitor`)}>
-                              <Monitor className="h-4 w-4 mr-1" /> Monitor
-                            </Button>
+                            <>
+                              <Button size="sm" variant="outline" onClick={() => navigate(`/exam/${exam.id}/monitor`)}>
+                                <Monitor className="h-4 w-4 mr-1" /> Monitor
+                              </Button>
+                              <Button size="sm" variant="outline" onClick={() => navigate(`/exam/${exam.id}/analytics`)}>
+                                <BarChart3 className="h-4 w-4 mr-1" /> Analytics
+                              </Button>
+                              <Button size="sm" variant="outline" onClick={() => navigate(`/leaderboard/${exam.id}`)}>
+                                <Trophy className="h-4 w-4 mr-1" /> Leaderboard
+                              </Button>
+                            </>
                           )}
                           <Button size="sm" variant="outline" onClick={() => navigate(`/exam/${exam.id}/edit`)}><Edit className="h-4 w-4 mr-1" /> Edit</Button>
                           <AlertDialog>
