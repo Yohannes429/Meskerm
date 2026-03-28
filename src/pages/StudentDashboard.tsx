@@ -172,15 +172,32 @@ const StudentDashboard = () => {
                           <div className="flex items-center gap-1"><Clock className="h-4 w-4" />{exam.duration_minutes} mins</div>
                           <div className="flex items-center gap-1"><Trophy className="h-4 w-4" />{exam.total_marks} marks</div>
                         </div>
-                        {taken?.status === "completed" ? (
-                          <Button variant="outline" onClick={() => navigate(`/results/${taken.id}`)} className="w-full">
-                            <Eye className="h-4 w-4 mr-2" /> View Results
-                          </Button>
-                        ) : (
-                          <Button onClick={() => startExam(exam.id, exam.total_marks)} className="w-full">
-                            {taken?.status === "in_progress" ? "Continue Exam" : "Start Exam"}
-                          </Button>
+                        {(exam as any).scheduled_start && (
+                          <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                            <Calendar className="h-3 w-3" />
+                            {new Date((exam as any).scheduled_start).toLocaleString()} — {(exam as any).scheduled_end ? new Date((exam as any).scheduled_end).toLocaleString() : "Open"}
+                          </div>
                         )}
+                        <div className="flex gap-2">
+                          {taken?.status === "completed" ? (
+                            <>
+                              <Button variant="outline" onClick={() => navigate(`/results/${taken.id}`)} className="flex-1">
+                                <Eye className="h-4 w-4 mr-2" /> Results
+                              </Button>
+                              <Button variant="outline" onClick={() => navigate(`/leaderboard/${exam.id}`)} className="flex-1">
+                                <Trophy className="h-4 w-4 mr-2" /> Leaderboard
+                              </Button>
+                            </>
+                          ) : (
+                            <Button onClick={() => startExam(exam.id, exam.total_marks)} className="w-full"
+                              disabled={!!(exam as any).scheduled_start && new Date((exam as any).scheduled_start) > new Date()}
+                            >
+                              {(exam as any).scheduled_start && new Date((exam as any).scheduled_start) > new Date()
+                                ? "Not Yet Available"
+                                : taken?.status === "in_progress" ? "Continue Exam" : "Start Exam"}
+                            </Button>
+                          )}
+                        </div>
                       </CardContent>
                     </Card>
                   );
