@@ -17,6 +17,8 @@ import CreateExam from "./pages/CreateExam";
 import TakeExam from "./pages/TakeExam";
 import ExamResults from "./pages/ExamResults";
 import LiveExamMonitor from "./pages/LiveExamMonitor";
+import Leaderboard from "./pages/Leaderboard";
+import ExamAnalytics from "./pages/ExamAnalytics";
 import ResetPassword from "./pages/ResetPassword";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -70,6 +72,12 @@ const App = () => (
             </ProtectedRoute>
           } />
           <Route path="/results/:studentExamId" element={<ExamResults />} />
+          <Route path="/leaderboard/:examId" element={<Leaderboard />} />
+          <Route path="/exam/:examId/analytics" element={
+            <ProtectedRoute allowedRoles={["teacher", "admin"]}>
+              <ExamAnalytics />
+            </ProtectedRoute>
+          } />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

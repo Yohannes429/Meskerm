@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import {
-  BookOpen, Users, TrendingUp, Plus, Edit, Trash2, Eye, GraduationCap, Search, Monitor,
+  BookOpen, Users, TrendingUp, Plus, Edit, Trash2, Eye, GraduationCap, Search, Monitor, BarChart3, Trophy,
 } from "lucide-react";
 import { toast } from "sonner";
 import Navbar from "@/components/Navbar";
@@ -123,6 +123,21 @@ const TeacherDashboard = () => {
     const { error } = await supabase.from("exams" as any).update({ status: "published" }).eq("id", examId);
     if (error) { toast.error("Failed to publish exam"); return; }
     toast.success("Exam published successfully");
+
+    // Send notification to all students
+    const exam = exams.find((e) => e.id === examId);
+    const { data: students } = await supabase.from("profiles" as any).select("id").eq("role", "student");
+    if (students && exam) {
+      const notifs = (students as any[]).map((s: any) => ({
+        user_id: s.id,
+        title: "New Exam Available",
+        message: `"${exam.title}" (${exam.subject}) has been published. Good luck!`,
+        type: "exam",
+        link: "/student-dashboard",
+      }));
+      await supabase.from("notifications" as any).insert(notifs as any);
+    }
+
     const { data: { user } } = await supabase.auth.getUser();
     if (user) await fetchData(user.id);
   };
@@ -244,9 +259,17 @@ const TeacherDashboard = () => {
                             <Button size="sm" onClick={() => publishExam(exam.id)}><Eye className="h-4 w-4 mr-1" /> Publish</Button>
                           )}
                           {exam.status === "published" && (
-                            <Button size="sm" variant="outline" onClick={() => navigate(`/exam/${exam.id}/monitor`)}>
-                              <Monitor className="h-4 w-4 mr-1" /> Monitor
-                            </Button>
+                            <>
+                              <Button size="sm" variant="outline" onClick={() => navigate(`/exam/${exam.id}/monitor`)}>
+                                <Monitor className="h-4 w-4 mr-1" /> Monitor
+                              </Button>
+                              <Button size="sm" variant="outline" onClick={() => navigate(`/exam/${exam.id}/analytics`)}>
+                                <BarChart3 className="h-4 w-4 mr-1" /> Analytics
+                              </Button>
+                              <Button size="sm" variant="outline" onClick={() => navigate(`/leaderboard/${exam.id}`)}>
+                                <Trophy className="h-4 w-4 mr-1" /> Leaderboard
+                              </Button>
+                            </>
                           )}
                           <Button size="sm" variant="outline" onClick={() => navigate(`/exam/${exam.id}/edit`)}><Edit className="h-4 w-4 mr-1" /> Edit</Button>
                           <AlertDialog>

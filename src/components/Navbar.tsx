@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, BookOpen, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
+import NotificationBell from "@/components/NotificationBell";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -98,9 +99,12 @@ const Navbar = () => {
 
           <div className="hidden md:flex md:items-center md:space-x-4">
             {user ? (
-              <Button variant="outline" onClick={handleSignOut} size="sm">
-                <LogOut className="h-4 w-4 mr-2" /> Sign Out
-              </Button>
+              <>
+                <NotificationBell userId={user.id} />
+                <Button variant="outline" onClick={handleSignOut} size="sm">
+                  <LogOut className="h-4 w-4 mr-2" /> Sign Out
+                </Button>
+              </>
             ) : (
               <>
                 <Link to="/auth">
@@ -156,9 +160,12 @@ const Navbar = () => {
               )}
               <div className="space-y-2 pt-4">
                 {user ? (
-                  <Button variant="outline" className="w-full" onClick={() => { handleSignOut(); setIsOpen(false); }}>
-                    <LogOut className="h-4 w-4 mr-2" /> Sign Out
-                  </Button>
+                  <>
+                    <div className="flex justify-center mb-2"><NotificationBell userId={user.id} /></div>
+                    <Button variant="outline" className="w-full" onClick={() => { handleSignOut(); setIsOpen(false); }}>
+                      <LogOut className="h-4 w-4 mr-2" /> Sign Out
+                    </Button>
+                  </>
                 ) : (
                   <>
                     <Link to="/auth" onClick={() => setIsOpen(false)}>

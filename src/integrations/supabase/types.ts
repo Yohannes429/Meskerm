@@ -23,6 +23,8 @@ export type Database = {
           id: string
           instructions: string | null
           passing_marks: number
+          scheduled_end: string | null
+          scheduled_start: string | null
           session_status: string
           status: string
           subject: string
@@ -39,6 +41,8 @@ export type Database = {
           id?: string
           instructions?: string | null
           passing_marks?: number
+          scheduled_end?: string | null
+          scheduled_start?: string | null
           session_status?: string
           status?: string
           subject: string
@@ -55,6 +59,8 @@ export type Database = {
           id?: string
           instructions?: string | null
           passing_marks?: number
+          scheduled_end?: string | null
+          scheduled_start?: string | null
           session_status?: string
           status?: string
           subject?: string
@@ -101,6 +107,39 @@ export type Database = {
           status?: string
           title?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          created_at: string
+          id: string
+          is_read: boolean
+          link: string | null
+          message: string
+          title: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          link?: string | null
+          message: string
+          title: string
+          type?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          link?: string | null
+          message?: string
+          title?: string
+          type?: string
+          user_id?: string
         }
         Relationships: []
       }

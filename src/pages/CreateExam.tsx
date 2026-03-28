@@ -36,6 +36,8 @@ const CreateExam = () => {
     total_marks: "",
     passing_marks: "",
     instructions: "",
+    scheduled_start: "",
+    scheduled_end: "",
   });
 
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -85,6 +87,8 @@ const CreateExam = () => {
         total_marks: e.total_marks.toString(),
         passing_marks: e.passing_marks.toString(),
         instructions: e.instructions || "",
+        scheduled_start: e.scheduled_start || "",
+        scheduled_end: e.scheduled_end || "",
       });
 
       const { data: questionsData } = await supabase
@@ -137,14 +141,19 @@ const CreateExam = () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error("Not authenticated");
 
-      const examPayload = {
-        ...examData,
+      const examPayload: any = {
+        title: examData.title,
+        description: examData.description,
+        subject: examData.subject,
         grade_level: parseInt(examData.grade_level),
         duration_minutes: parseInt(examData.duration_minutes),
         total_marks: parseInt(examData.total_marks),
         passing_marks: parseInt(examData.passing_marks),
+        instructions: examData.instructions,
         teacher_id: user.id,
         status,
+        scheduled_start: examData.scheduled_start || null,
+        scheduled_end: examData.scheduled_end || null,
       };
 
       let savedExamId = examId;
@@ -309,6 +318,27 @@ const CreateExam = () => {
                   placeholder="Instructions for students taking the exam"
                   rows={4}
                 />
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="scheduled_start">Scheduled Start (optional)</Label>
+                  <Input
+                    id="scheduled_start"
+                    type="datetime-local"
+                    value={examData.scheduled_start ? examData.scheduled_start.slice(0, 16) : ""}
+                    onChange={(e) => setExamData({ ...examData, scheduled_start: e.target.value ? new Date(e.target.value).toISOString() : "" })}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="scheduled_end">Scheduled End (optional)</Label>
+                  <Input
+                    id="scheduled_end"
+                    type="datetime-local"
+                    value={examData.scheduled_end ? examData.scheduled_end.slice(0, 16) : ""}
+                    onChange={(e) => setExamData({ ...examData, scheduled_end: e.target.value ? new Date(e.target.value).toISOString() : "" })}
+                  />
+                </div>
               </div>
             </CardContent>
           </Card>
