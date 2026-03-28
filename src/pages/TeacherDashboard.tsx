@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import {
-  BookOpen, Users, TrendingUp, Plus, Edit, Trash2, Eye, GraduationCap, Search, Monitor,
+  BookOpen, Users, TrendingUp, Plus, Edit, Trash2, Eye, GraduationCap, Search, Monitor, BarChart3, Trophy,
 } from "lucide-react";
 import { toast } from "sonner";
 import Navbar from "@/components/Navbar";
