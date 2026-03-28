@@ -340,12 +340,6 @@ const CreateExam = () => {
                   />
                 </div>
               </div>
-                  value={examData.instructions}
-                  onChange={(e) => setExamData({ ...examData, instructions: e.target.value })}
-                  placeholder="Instructions for students taking the exam"
-                  rows={4}
-                />
-              </div>
             </CardContent>
           </Card>
 
