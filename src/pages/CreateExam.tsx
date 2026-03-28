@@ -87,6 +87,8 @@ const CreateExam = () => {
         total_marks: e.total_marks.toString(),
         passing_marks: e.passing_marks.toString(),
         instructions: e.instructions || "",
+        scheduled_start: e.scheduled_start || "",
+        scheduled_end: e.scheduled_end || "",
       });
 
       const { data: questionsData } = await supabase
