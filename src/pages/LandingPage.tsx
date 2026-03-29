@@ -270,6 +270,32 @@ const LandingPage = () => {
         </section>
       )}
 
+      {/* Announcements Section */}
+      {announcements.length > 0 && (
+        <section className="bg-muted/50 py-16">
+          <div className="container mx-auto px-4">
+            <div className="mb-8 text-center">
+              <h2 className="mb-4 text-3xl font-bold text-foreground lg:text-4xl">Announcements</h2>
+              <p className="mx-auto max-w-2xl text-lg text-muted-foreground">Important updates from the school administration</p>
+            </div>
+            <div className="max-w-3xl mx-auto space-y-4">
+              {announcements.map(a => (
+                <Card key={a.id} className={a.is_pinned ? "border-2 border-primary/30" : ""}>
+                  <CardContent className="pt-6">
+                    <div className="flex items-center gap-2 flex-wrap mb-2">
+                      {a.is_pinned && <Pin className="h-3 w-3 text-primary" />}
+                      <Badge variant="outline" className="capitalize">{a.target_audience}</Badge>
+                      <span className="text-xs text-muted-foreground">{new Date(a.created_at).toLocaleDateString()}</span>
+                    </div>
+                    <h3 className="font-semibold text-foreground">{a.title}</h3>
+                    <p className="text-sm text-muted-foreground mt-1">{a.content}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* CTA Section */}
       <section className="py-20">
