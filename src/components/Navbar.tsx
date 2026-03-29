@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Menu, X, BookOpen, LogOut } from "lucide-react";
+import { Menu, X, BookOpen, LogOut, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import NotificationBell from "@/components/NotificationBell";
@@ -9,8 +9,22 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
   const [role, setRole] = useState<string | null>(null);
+  const [darkMode, setDarkMode] = useState(() => {
+    if (typeof window !== "undefined") return localStorage.getItem("theme") === "dark";
+    return false;
+  });
   const location = useLocation();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  }, [darkMode]);
 
   useEffect(() => {
     const getUser = async () => {
@@ -97,7 +111,10 @@ const Navbar = () => {
             )}
           </div>
 
-          <div className="hidden md:flex md:items-center md:space-x-4">
+          <div className="hidden md:flex md:items-center md:space-x-3">
+            <Button variant="ghost" size="icon" onClick={() => setDarkMode(!darkMode)} aria-label="Toggle dark mode">
+              {darkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            </Button>
             {user ? (
               <>
                 <NotificationBell userId={user.id} />
@@ -158,6 +175,12 @@ const Navbar = () => {
                   {getDashboardLink().name}
                 </Link>
               )}
+              <div className="flex justify-center pt-2">
+                <Button variant="ghost" size="sm" onClick={() => setDarkMode(!darkMode)}>
+                  {darkMode ? <Sun className="h-4 w-4 mr-2" /> : <Moon className="h-4 w-4 mr-2" />}
+                  {darkMode ? "Light Mode" : "Dark Mode"}
+                </Button>
+              </div>
               <div className="space-y-2 pt-4">
                 {user ? (
                   <>

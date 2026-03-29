@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, BookOpen, GraduationCap, Users, Award, TrendingUp, CheckCircle, Calendar } from "lucide-react";
+import { ArrowRight, BookOpen, GraduationCap, Users, Award, TrendingUp, CheckCircle, Calendar, Megaphone, Pin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -8,6 +8,16 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import heroImage from "@/assets/hero-image.jpg";
 import { supabase } from "@/integrations/supabase/client";
+
+interface NewsPost {
+  id: string; title: string; excerpt: string | null; content: string;
+  image_url: string | null; category: string; created_at: string;
+}
+
+interface Announcement {
+  id: string; title: string; content: string; target_audience: string;
+  is_pinned: boolean; created_at: string;
+}
 
 interface NewsPost {
   id: string;
@@ -21,18 +31,22 @@ interface NewsPost {
 
 const LandingPage = () => {
   const [latestNews, setLatestNews] = useState<NewsPost[]>([]);
+  const [announcements, setAnnouncements] = useState<Announcement[]>([]);
 
   useEffect(() => {
-    const fetchNews = async () => {
-      const { data } = await supabase
-        .from("news_posts" as any)
-        .select("*")
-        .eq("status", "published")
-        .order("created_at", { ascending: false })
-        .limit(3);
-      setLatestNews((data as any) || []);
+    const fetchData = async () => {
+      const { data: newsData } = await supabase
+        .from("news_posts" as any).select("*").eq("status", "published")
+        .order("created_at", { ascending: false }).limit(3);
+      setLatestNews((newsData as any) || []);
+
+      const { data: annData } = await supabase
+        .from("announcements" as any).select("*").eq("status", "published")
+        .in("target_audience", ["all", "students"])
+        .order("is_pinned", { ascending: false }).order("created_at", { ascending: false }).limit(5);
+      setAnnouncements((annData as any) || []);
     };
-    fetchNews();
+    fetchData();
   }, []);
   const features = [
     {
@@ -256,6 +270,32 @@ const LandingPage = () => {
         </section>
       )}
 
+      {/* Announcements Section */}
+      {announcements.length > 0 && (
+        <section className="bg-muted/50 py-16">
+          <div className="container mx-auto px-4">
+            <div className="mb-8 text-center">
+              <h2 className="mb-4 text-3xl font-bold text-foreground lg:text-4xl">Announcements</h2>
+              <p className="mx-auto max-w-2xl text-lg text-muted-foreground">Important updates from the school administration</p>
+            </div>
+            <div className="max-w-3xl mx-auto space-y-4">
+              {announcements.map(a => (
+                <Card key={a.id} className={a.is_pinned ? "border-2 border-primary/30" : ""}>
+                  <CardContent className="pt-6">
+                    <div className="flex items-center gap-2 flex-wrap mb-2">
+                      {a.is_pinned && <Pin className="h-3 w-3 text-primary" />}
+                      <Badge variant="outline" className="capitalize">{a.target_audience}</Badge>
+                      <span className="text-xs text-muted-foreground">{new Date(a.created_at).toLocaleDateString()}</span>
+                    </div>
+                    <h3 className="font-semibold text-foreground">{a.title}</h3>
+                    <p className="text-sm text-muted-foreground mt-1">{a.content}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* CTA Section */}
       <section className="py-20">

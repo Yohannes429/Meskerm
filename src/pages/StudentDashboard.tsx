@@ -5,10 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { BookOpen, Clock, Trophy, GraduationCap, Eye, Calendar } from "lucide-react";
+import { BookOpen, Clock, Trophy, GraduationCap, Eye, Calendar, Megaphone } from "lucide-react";
 import { toast } from "sonner";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import AnnouncementsList from "@/components/shared/AnnouncementsList";
 
 interface Exam {
   id: string;
@@ -144,9 +145,10 @@ const StudentDashboard = () => {
         </div>
 
         <Tabs defaultValue="available" className="space-y-4">
-          <TabsList>
+          <TabsList className="flex-wrap h-auto gap-1">
             <TabsTrigger value="available">Available Exams</TabsTrigger>
             <TabsTrigger value="results">My Results</TabsTrigger>
+            <TabsTrigger value="announcements" className="gap-1"><Megaphone className="h-3 w-3" />Announcements</TabsTrigger>
           </TabsList>
 
           <TabsContent value="available" className="space-y-4">
@@ -247,6 +249,9 @@ const StudentDashboard = () => {
                 })}
               </div>
             )}
+          </TabsContent>
+          <TabsContent value="announcements">
+            <AnnouncementsList audiences={["all", "students"]} />
           </TabsContent>
         </Tabs>
       </main>
