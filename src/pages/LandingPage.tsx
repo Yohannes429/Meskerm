@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, BookOpen, GraduationCap, Users, Award, TrendingUp, CheckCircle, Calendar } from "lucide-react";
+import { ArrowRight, BookOpen, GraduationCap, Users, Award, TrendingUp, CheckCircle, Calendar, Megaphone, Pin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -8,6 +8,16 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import heroImage from "@/assets/hero-image.jpg";
 import { supabase } from "@/integrations/supabase/client";
+
+interface NewsPost {
+  id: string; title: string; excerpt: string | null; content: string;
+  image_url: string | null; category: string; created_at: string;
+}
+
+interface Announcement {
+  id: string; title: string; content: string; target_audience: string;
+  is_pinned: boolean; created_at: string;
+}
 
 interface NewsPost {
   id: string;
