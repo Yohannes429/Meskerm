@@ -175,6 +175,12 @@ const Navbar = () => {
                   {getDashboardLink().name}
                 </Link>
               )}
+              <div className="flex justify-center pt-2">
+                <Button variant="ghost" size="sm" onClick={() => setDarkMode(!darkMode)}>
+                  {darkMode ? <Sun className="h-4 w-4 mr-2" /> : <Moon className="h-4 w-4 mr-2" />}
+                  {darkMode ? "Light Mode" : "Dark Mode"}
+                </Button>
+              </div>
               <div className="space-y-2 pt-4">
                 {user ? (
                   <>
