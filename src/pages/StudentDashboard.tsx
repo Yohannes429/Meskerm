@@ -250,6 +250,9 @@ const StudentDashboard = () => {
               </div>
             )}
           </TabsContent>
+          <TabsContent value="announcements">
+            <AnnouncementsList audiences={["all", "students"]} />
+          </TabsContent>
         </Tabs>
       </main>
       <Footer />
