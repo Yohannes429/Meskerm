@@ -111,7 +111,10 @@ const Navbar = () => {
             )}
           </div>
 
-          <div className="hidden md:flex md:items-center md:space-x-4">
+          <div className="hidden md:flex md:items-center md:space-x-3">
+            <Button variant="ghost" size="icon" onClick={() => setDarkMode(!darkMode)} aria-label="Toggle dark mode">
+              {darkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            </Button>
             {user ? (
               <>
                 <NotificationBell userId={user.id} />
