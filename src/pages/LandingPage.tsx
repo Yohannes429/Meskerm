@@ -34,16 +34,19 @@ const LandingPage = () => {
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
 
   useEffect(() => {
-    const fetchNews = async () => {
-      const { data } = await supabase
-        .from("news_posts" as any)
-        .select("*")
-        .eq("status", "published")
-        .order("created_at", { ascending: false })
-        .limit(3);
-      setLatestNews((data as any) || []);
+    const fetchData = async () => {
+      const { data: newsData } = await supabase
+        .from("news_posts" as any).select("*").eq("status", "published")
+        .order("created_at", { ascending: false }).limit(3);
+      setLatestNews((newsData as any) || []);
+
+      const { data: annData } = await supabase
+        .from("announcements" as any).select("*").eq("status", "published")
+        .in("target_audience", ["all", "students"])
+        .order("is_pinned", { ascending: false }).order("created_at", { ascending: false }).limit(5);
+      setAnnouncements((annData as any) || []);
     };
-    fetchNews();
+    fetchData();
   }, []);
   const features = [
     {
