@@ -14,6 +14,128 @@ export type Database = {
   }
   public: {
     Tables: {
+      announcements: {
+        Row: {
+          author_id: string
+          content: string
+          created_at: string
+          id: string
+          is_pinned: boolean
+          status: string
+          target_audience: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          author_id: string
+          content: string
+          created_at?: string
+          id?: string
+          is_pinned?: boolean
+          status?: string
+          target_audience?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author_id?: string
+          content?: string
+          created_at?: string
+          id?: string
+          is_pinned?: boolean
+          status?: string
+          target_audience?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      attendance: {
+        Row: {
+          check_in: string | null
+          check_out: string | null
+          created_at: string
+          date: string
+          employee_id: string
+          id: string
+          notes: string | null
+          status: string
+        }
+        Insert: {
+          check_in?: string | null
+          check_out?: string | null
+          created_at?: string
+          date?: string
+          employee_id: string
+          id?: string
+          notes?: string | null
+          status?: string
+        }
+        Update: {
+          check_in?: string | null
+          check_out?: string | null
+          created_at?: string
+          date?: string
+          employee_id?: string
+          id?: string
+          notes?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "attendance_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      employees: {
+        Row: {
+          created_at: string
+          department: string | null
+          email: string
+          full_name: string
+          hire_date: string
+          id: string
+          phone: string | null
+          position: string | null
+          role: string
+          status: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          department?: string | null
+          email: string
+          full_name: string
+          hire_date?: string
+          id?: string
+          phone?: string | null
+          position?: string | null
+          role?: string
+          status?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          department?: string | null
+          email?: string
+          full_name?: string
+          hire_date?: string
+          id?: string
+          phone?: string | null
+          position?: string | null
+          role?: string
+          status?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       exams: {
         Row: {
           created_at: string
@@ -70,6 +192,59 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      leave_requests: {
+        Row: {
+          admin_notes: string | null
+          created_at: string
+          employee_id: string
+          end_date: string
+          id: string
+          leave_type: string
+          reason: string
+          reviewed_by: string | null
+          start_date: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          created_at?: string
+          employee_id: string
+          end_date: string
+          id?: string
+          leave_type?: string
+          reason?: string
+          reviewed_by?: string | null
+          start_date: string
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          admin_notes?: string | null
+          created_at?: string
+          employee_id?: string
+          end_date?: string
+          id?: string
+          leave_type?: string
+          reason?: string
+          reviewed_by?: string | null
+          start_date?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "leave_requests_employee_id_fkey"
+            columns: ["employee_id"]
+            isOneToOne: false
+            referencedRelation: "employees"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       news_posts: {
         Row: {
