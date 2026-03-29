@@ -145,9 +145,10 @@ const StudentDashboard = () => {
         </div>
 
         <Tabs defaultValue="available" className="space-y-4">
-          <TabsList>
+          <TabsList className="flex-wrap h-auto gap-1">
             <TabsTrigger value="available">Available Exams</TabsTrigger>
             <TabsTrigger value="results">My Results</TabsTrigger>
+            <TabsTrigger value="announcements" className="gap-1"><Megaphone className="h-3 w-3" />Announcements</TabsTrigger>
           </TabsList>
 
           <TabsContent value="available" className="space-y-4">
