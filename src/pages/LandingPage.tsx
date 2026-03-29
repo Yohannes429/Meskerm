@@ -31,6 +31,7 @@ interface NewsPost {
 
 const LandingPage = () => {
   const [latestNews, setLatestNews] = useState<NewsPost[]>([]);
+  const [announcements, setAnnouncements] = useState<Announcement[]>([]);
 
   useEffect(() => {
     const fetchNews = async () => {
